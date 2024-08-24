@@ -1,0 +1,61 @@
+[tool.black]
+line_length = 120
+
+
+[tool.ruff]
+exclude = [".git", ".vscode", "env", ".env", ".venv", ".pytest_cache", ".mypy_cache", "venv", "webserver_config.py"]
+select = ["ALL"]
+ignore = ["D1"]
+line-length = 120
+indent-width = 4
+target-version = "py311"
+
+
+[tool.ruff.lint]
+select = [
+    "E", "F", "W", "C90", "I", "N", "UP",
+    "YTT", "ASYNC", "S", "B", "C4", "DTZ",
+    "T10", "FA", "ISC", "ICN", "PIE", "T20",
+    "PT", "Q", "RET", "SLF", "SIM", "ERA",
+    "PLE", "TRY", "COM"
+]
+ignore = [
+    "E712",
+    "TRY003",
+    "S501",
+    "S308",  # mark_safe
+    "PIE796",  # non-unique-enums
+    "B026",  #  Star-arg unpacking after a keyword argument is strongly discouraged
+    "UP031",  # (loggers) Use format specifiers instead of percent format
+    "TRY401",  # (loggers) Redundant exception object included in `logging.exception` call
+]
+fixable = ["ALL"]
+unfixable = [
+    "ERA",  # do not autoremove commented out code
+]
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+
+
+[tool.ruff.per-file-ignores]
+"tests/*" = ["S", "B008", "C4", "ISC", "SLF", "PT004", "ERA001", "PT006", "PT011", "PT012"]
+"*/alembic/*" = ["E501"]
+"__init__.py" = [
+    "F401",
+    "F403",
+]
+
+
+[tool.ruff.pep8-naming]
+classmethod-decorators = ["pydantic.validator", "pydantic.root_validator"]
+
+
+[tool.ruff.lint.isort]
+lines-after-imports = 2
+split-on-trailing-comma = true

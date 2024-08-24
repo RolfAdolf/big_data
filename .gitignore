@@ -1,0 +1,9 @@
+venv
+
+__pycache__
+
+
+result.bin
+
+.idea
+.DS_Store
