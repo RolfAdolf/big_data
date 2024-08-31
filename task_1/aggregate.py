@@ -2,9 +2,9 @@ import mmap
 import struct
 import threading
 from collections.abc import Generator
-from contextlib import contextmanager
 from dataclasses import dataclass
-from timeit import default_timer
+
+from utils.profile import timer
 
 
 @dataclass(kw_only=True, frozen=True)
@@ -16,7 +16,7 @@ class WorkerResult:
 
 lock = threading.Lock()
 INPUT_FILE = "./result.bin"
-VERBOSE_STEP = int(1e6)
+VERBOSE_STEP = int(1e8)
 WORKERS_NUM = 5
 
 workers_result: list[WorkerResult] = []
@@ -28,15 +28,6 @@ def print_stats():
         f"Min: {min(workers_result, key=lambda x: x.min_).min_}.\n"
         f"Max: {max(workers_result, key=lambda x: x.max_).max_}.\n",
     )
-
-
-@contextmanager
-def timer():
-    start = default_timer()
-    yield
-    end = default_timer()
-    print(f"Time: {end - start}")
-    return end - start
 
 
 def read_file(file_path: str) -> Generator[int, None, None]:
